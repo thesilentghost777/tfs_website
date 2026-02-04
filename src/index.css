@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TechForge Solution 237 - Apple iOS Inspired Design System */
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Apple iOS Inspired - Clean Minimal Dark Theme */
+    --background: 0 0% 0%; /* Pure Black */
+    --background-secondary: 0 0% 7%; /* #121212 */
+    --foreground: 0 0% 100%; /* Pure White */
+    
+    /* Brand Colors - Subtle Blues */
+    --primary: 211 100% 50%; /* Apple Blue #007AFF */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 211 100% 60%;
+    
+    --secondary: 0 0% 40%; /* Gray */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* UI Colors */
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 100%;
+    
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 211 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 211 100% 50%;
+    
+    --radius: 1rem;
+    
+    /* Shadows - Soft & Subtle */
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.2);
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 211 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 211 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  
+  ::selection {
+    background-color: hsl(211 100% 50% / 0.3);
+    color: white;
+  }
+}
+
+@layer components {
+  /* Apple Style Button */
+  .btn-primary {
+    @apply relative overflow-hidden bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:opacity-90 active:scale-95;
+  }
+  
+  .btn-outline {
+    @apply relative border border-border text-foreground font-semibold px-8 py-4 rounded-full;
+    @apply bg-transparent backdrop-blur-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-muted active:scale-95;
+  }
+  
+  /* Card Styles - Glass Morphism */
+  .card-glass {
+    @apply relative bg-card/60 backdrop-blur-2xl border border-border/30 rounded-3xl;
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .card-glass:hover {
+    @apply border-border/50;
+  }
+  
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-[hsl(211,100%,70%)] bg-clip-text text-transparent;
+  }
+  
+  /* Section Styles */
+  .section-padding {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12;
+  }
+  
+  /* Animated Underline */
+  .link-underline {
+    @apply relative;
+  }
+  
+  .link-underline::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-0 h-[1px] bg-foreground;
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+  
+  /* Minimal Noise Overlay */
+  .noise-overlay {
+    @apply pointer-events-none fixed inset-0 z-50 opacity-[0.015];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  /* Animation Utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+  
+  /* Apple Style Reveal */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 30%);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(0 0% 40%);
+}

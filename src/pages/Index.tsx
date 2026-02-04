@@ -1,0 +1,76 @@
+import { useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import Problems from '@/components/Problems';
+import HourglassAnimation from '@/components/HourglassAnimation';
+import Services from '@/components/Services';
+import Realisations from '@/components/Realisations';
+import Partners from '@/components/Partners';
+import Technologies from '@/components/Technologies';
+import About from '@/components/About';
+import Contact from '@/components/Contact';
+import Map from '@/components/Map';
+import Footer from '@/components/Footer';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const Index = () => {
+  useEffect(() => {
+    // Smooth scroll behavior for anchor links
+    const handleAnchorClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.hash) {
+        e.preventDefault();
+        const element = document.querySelector(target.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', handleAnchorClick);
+    });
+
+    // Refresh ScrollTrigger on load
+    ScrollTrigger.refresh();
+
+    return () => {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', handleAnchorClick);
+      });
+      ScrollTrigger.killAll();
+    };
+  }, []);
+
+  return (
+    <div className="relative">
+      {/* Noise Overlay */}
+      <div className="noise-overlay" />
+      
+      {/* Navigation */}
+      <Navbar />
+
+      {/* Main Content */}
+      <main>
+        <Hero />
+        <Problems />
+        <HourglassAnimation />
+        <Services />
+        <Realisations />
+        <Partners />
+        <Technologies />
+        <About />
+        <Contact />
+        <Map />
+      </main>
+
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;
