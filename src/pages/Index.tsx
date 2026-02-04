@@ -13,6 +13,7 @@ import About from '@/components/About';
 import Contact from '@/components/Contact';
 import Map from '@/components/Map';
 import Footer from '@/components/Footer';
+import { Helmet } from 'react-helmet';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,7 +47,12 @@ const Index = () => {
   }, []);
 
   return (
+    
     <div className="relative">
+      <Helmet>
+        <title>Tech Forge Solutions</title>
+      </Helmet>
+
       {/* Noise Overlay */}
       <div className="noise-overlay" />
       
