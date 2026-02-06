@@ -13,6 +13,9 @@ const HourglassAnimation = () => {
   const mobileTextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Détection mobile pour optimisations
+    const isMobile = window.innerWidth < 768;
+    
     const ctx = gsap.context(() => {
       // Sand animation controlled by scroll
       const tl = gsap.timeline({
@@ -20,9 +23,13 @@ const HourglassAnimation = () => {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1,
+          scrub: isMobile ? 0.5 : 1, // Scrub plus rapide sur mobile
           pin: true,
           anticipatePin: 1,
+          // Optimisations mobile
+          fastScrollEnd: isMobile,
+          preventOverlaps: true,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -30,36 +37,43 @@ const HourglassAnimation = () => {
       tl.to(topSandRef.current, {
         attr: { height: 0, y: 130 },
         ease: 'none',
+        // Force hardware acceleration
+        force3D: true,
       }, 0);
 
       // Bottom sand increases (from empty to full)
       tl.to(bottomSandRef.current, {
         attr: { height: 100 },
         ease: 'none',
+        force3D: true,
       }, 0);
 
       // Desktop text animations - fade in from sides
-      tl.fromTo(
-        textLeftRef.current,
-        { opacity: 0, x: -50 },
-        { opacity: 1, x: 0, duration: 0.3 },
-        0.3
-      );
+      if (!isMobile) {
+        tl.fromTo(
+          textLeftRef.current,
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.3, force3D: true },
+          0.3
+        );
 
-      tl.fromTo(
-        textRightRef.current,
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 0.3 },
-        0.4
-      );
+        tl.fromTo(
+          textRightRef.current,
+          { opacity: 0, x: 50 },
+          { opacity: 1, x: 0, duration: 0.3, force3D: true },
+          0.4
+        );
+      }
 
-      // Mobile text animation - fade in from bottom
-      tl.fromTo(
-        mobileTextRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        0.5
-      );
+      // Mobile text animation - simplifiée
+      if (isMobile) {
+        tl.fromTo(
+          mobileTextRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, force3D: true },
+          0.3
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -69,9 +83,14 @@ const HourglassAnimation = () => {
     <section
       ref={sectionRef}
       className="relative h-screen bg-background overflow-hidden flex items-center justify-center"
+      style={{
+        // Optimisations CSS pour mobile
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+      }}
     >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(217_91%_53%_/_0.05)_0%,_transparent_70%)]" />
+      {/* Subtle gradient background - simplifié sur mobile */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(217_91%_53%_/_0.05)_0%,_transparent_70%)] md:opacity-100 opacity-50" />
 
       {/* Main content container */}
       <div className="relative flex items-center justify-center gap-8 md:gap-16 lg:gap-24 w-full max-w-7xl px-4">
@@ -80,6 +99,7 @@ const HourglassAnimation = () => {
         <div 
           ref={textLeftRef}
           className="hidden md:block text-right max-w-xs lg:max-w-sm opacity-0"
+          style={{ willChange: 'opacity, transform' }}
         >
           <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
             <span className="text-gradient">Sur quel projet</span>
@@ -93,12 +113,22 @@ const HourglassAnimation = () => {
         </div>
 
         {/* Hourglass SVG */}
-        <div className="relative flex-shrink-0">
+        <div 
+          className="relative flex-shrink-0"
+          style={{ 
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+          }}
+        >
           <svg
             width="180"
             height="320"
             viewBox="0 0 200 350"
-            className="drop-shadow-[0_0_60px_hsl(217_91%_53%_/_0.3)]"
+            className="drop-shadow-[0_0_60px_hsl(217_91%_53%_/_0.3)] md:drop-shadow-[0_0_60px_hsl(217_91%_53%_/_0.3)]"
+            style={{
+              // Optimisations de rendu
+              shapeRendering: 'geometricPrecision',
+            }}
           >
             {/* Glass outer frame */}
             <defs>
@@ -141,6 +171,7 @@ const HourglassAnimation = () => {
               fill="none"
               stroke="hsl(0, 0%, 35%)"
               strokeWidth="3"
+              vectorEffect="non-scaling-stroke"
             />
 
             {/* Top sand (decreases with scroll) */}
@@ -152,7 +183,10 @@ const HourglassAnimation = () => {
                 width="110"
                 height="100"
                 fill="url(#sandGradient)"
-                className="transition-none"
+                style={{
+                  willChange: 'auto',
+                  transform: 'translateZ(0)',
+                }}
               />
             </g>
 
@@ -165,6 +199,7 @@ const HourglassAnimation = () => {
               stroke="hsl(217, 91%, 50%)"
               strokeWidth="3"
               opacity="0.8"
+              vectorEffect="non-scaling-stroke"
             />
 
             {/* Bottom sand (increases with scroll) */}
@@ -176,17 +211,22 @@ const HourglassAnimation = () => {
                 width="110"
                 height="0"
                 fill="url(#sandGradient)"
-                className="transition-none"
+                style={{
+                  willChange: 'auto',
+                  transform: 'translateZ(0)',
+                }}
               />
             </g>
 
-            {/* Glass reflections */}
+            {/* Glass reflections - cachées sur mobile pour performance */}
             <path
               d="M 55 40 Q 55 110, 90 150"
               fill="none"
               stroke="white"
               strokeWidth="2"
               opacity="0.1"
+              className="hidden md:block"
+              vectorEffect="non-scaling-stroke"
             />
             <path
               d="M 145 40 Q 145 110, 110 150"
@@ -194,6 +234,8 @@ const HourglassAnimation = () => {
               stroke="white"
               strokeWidth="1"
               opacity="0.05"
+              className="hidden md:block"
+              vectorEffect="non-scaling-stroke"
             />
           </svg>
         </div>
@@ -202,6 +244,7 @@ const HourglassAnimation = () => {
         <div 
           ref={textRightRef}
           className="hidden md:block text-left max-w-xs lg:max-w-sm opacity-0"
+          style={{ willChange: 'opacity, transform' }}
         >
           <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
             avec le temps
@@ -219,6 +262,7 @@ const HourglassAnimation = () => {
       <div 
         ref={mobileTextRef}
         className="md:hidden absolute bottom-20 left-0 right-0 text-center px-6 opacity-0"
+        style={{ willChange: 'opacity' }}
       >
         <p className="text-xl font-bold leading-relaxed">
           <span className="text-gradient">Sur quel projet</span>
@@ -228,10 +272,10 @@ const HourglassAnimation = () => {
         </p>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute top-1/4 left-1/6 w-1 h-1 bg-primary/40 rounded-full animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/6 w-2 h-2 bg-primary/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+      {/* Decorative elements - désactivés sur mobile */}
+      <div className="hidden md:block absolute top-1/4 left-1/6 w-1 h-1 bg-primary/40 rounded-full animate-pulse" />
+      <div className="hidden md:block absolute bottom-1/4 right-1/6 w-2 h-2 bg-primary/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className="hidden md:block absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
     </section>
   );
 };

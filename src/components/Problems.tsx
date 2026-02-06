@@ -23,7 +23,7 @@ const problems = [
   {
     title: "Besoin de visibilité",
     description: "Nous voulons présenter nos produits et services mais nous n'avons pas un site web professionnel.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
+    image: "testimonies/t4.jpg"
   },
 ];
 
