@@ -11,6 +11,8 @@ const services = [
   'Sites Vitrines',
   'Applications Web',
   'Applications Mobiles',
+  'Applications Pc',
+  'Applications Tv',
   'Automatisation',
 ];
 
