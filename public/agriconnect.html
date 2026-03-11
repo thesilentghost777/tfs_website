@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriConnect — Agriculture Intelligente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root {
+  --gd: #0d3b1a;
+  --gm: #1a5c2e;
+  --gb: #2d8a45;
+  --gl: #4ab563;
+  --go: #c8a84b;
+  --gol: #e8c96a;
+  --ra: #8b1a1a;
+  --wh: #ffffff;
+  --mt: rgba(255,255,255,0.62);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'Roboto',sans-serif; background:var(--gd); color:var(--wh); overflow-x:hidden; line-height:1.6; }
+h1,h2,h3,h4,.logo-text,.plan-price { font-family:'Nunito',sans-serif; }
+
+::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--gd)} ::-webkit-scrollbar-thumb{background:var(--gb);border-radius:2px}
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:18px 6%; display:flex; align-items:center; justify-content:space-between; transition:all .35s; }
+nav.scr { background:rgba(10,45,20,.96); backdrop-filter:blur(18px); padding:12px 6%; border-bottom:1px solid rgba(255,255,255,.08); box-shadow:0 4px 24px rgba(0,0,0,.3); }
+.logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.logo-ico { width:38px; height:38px; background:linear-gradient(135deg,var(--gb),var(--gl)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:19px; }
+.logo-text { font-size:1.25rem; font-weight:800; color:white; }
+.nlinks { display:flex; align-items:center; gap:32px; }
+.nlinks a { font-size:.9rem; font-weight:500; color:rgba(255,255,255,.78); text-decoration:none; transition:color .2s; font-family:'Roboto',sans-serif; }
+.nlinks a:hover { color:var(--gol); }
+.n-dl { display:flex; align-items:center; gap:7px; background:linear-gradient(135deg,var(--go),var(--gol)); color:var(--gd) !important; padding:9px 20px; border-radius:30px; font-weight:700 !important; font-size:.85rem !important; box-shadow:0 4px 16px rgba(200,168,75,.35); transition:all .3s !important; }
+.n-dl:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(200,168,75,.5) !important; }
+.hbg { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+.hbg span { display:block; width:24px; height:2px; background:white; border-radius:2px; }
+.mmenu { display:none; position:fixed; inset:0; z-index:300; background:rgba(10,45,20,.98); backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; gap:28px; }
+.mmenu.open { display:flex; }
+.mmenu a { font-family:'Nunito',sans-serif; font-size:1.6rem; font-weight:700; color:white; text-decoration:none; }
+.mmenu a:hover { color:var(--gol); }
+.mcl { position:absolute; top:24px; right:28px; font-size:2rem; background:none; border:none; color:white; cursor:pointer; }
+.m-dl { background:linear-gradient(135deg,var(--go),var(--gol)) !important; color:var(--gd) !important; padding:14px 36px; border-radius:30px; font-weight:800 !important; font-size:1.1rem !important; margin-top:12px; }
+
+/* SECTIONS */
+.eyebrow { display:block; font-size:.75rem; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--go); margin-bottom:14px; font-family:'Roboto',sans-serif; }
+.stitle { font-size:clamp(1.9rem,3.5vw,2.8rem); font-weight:800; line-height:1.15; margin-bottom:18px; letter-spacing:-.02em; }
+.ssub { font-size:1rem; color:var(--mt); line-height:1.75; max-width:520px; font-family:'Roboto',sans-serif; }
+
+/* HERO */
+#hero { min-height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; padding-top:80px; }
+.hbg-c { position:absolute; inset:0; background:radial-gradient(ellipse 55% 70% at 70% 50%,rgba(45,138,69,.14) 0%,transparent 65%),radial-gradient(ellipse 40% 50% at 10% 85%,rgba(200,168,75,.07) 0%,transparent 60%),linear-gradient(155deg,#0d3b1a 0%,#081e0e 60%,#041009 100%); }
+.hgrid { position:absolute; inset:0; background-image:linear-gradient(rgba(45,138,69,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(45,138,69,.04) 1px,transparent 1px); background-size:56px 56px; }
+.orb { position:absolute; border-radius:50%; filter:blur(70px); animation:ofl 9s ease-in-out infinite; }
+.oa { width:380px; height:380px; background:rgba(45,138,69,.1); top:-5%; right:8%; }
+.ob { width:260px; height:260px; background:rgba(200,168,75,.07); bottom:8%; left:3%; animation-delay:-4s; }
+@keyframes ofl { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-28px)} }
+
+.hero-in { position:relative; z-index:2; max-width:1240px; margin:0 auto; padding:40px 6% 80px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+
+.hbadge { display:inline-flex; align-items:center; gap:8px; background:rgba(45,138,69,.18); border:1px solid rgba(74,181,99,.28); padding:7px 15px; border-radius:30px; font-size:.78rem; font-weight:500; color:var(--gl); margin-bottom:26px; font-family:'Roboto',sans-serif; }
+.hbadge::before { content:''; width:6px; height:6px; background:var(--gl); border-radius:50%; animation:blk 2s infinite; }
+@keyframes blk { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.htitle { font-size:clamp(2.6rem,4.5vw,4rem); font-weight:900; line-height:1.08; letter-spacing:-.03em; margin-bottom:20px; }
+.htitle .ac { background:linear-gradient(90deg,var(--go),var(--gol) 50%,var(--gl)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hdesc { font-size:1.05rem; color:rgba(255,255,255,.68); line-height:1.8; margin-bottom:36px; max-width:460px; font-family:'Roboto',sans-serif; }
+
+.dl-btns { display:flex; gap:13px; flex-wrap:wrap; margin-bottom:48px; }
+.btn-st { display:inline-flex; align-items:center; gap:12px; padding:13px 24px; border-radius:14px; text-decoration:none; transition:all .3s; font-family:'Roboto',sans-serif; }
+.bst-a { background:linear-gradient(135deg,#1a1a2e,#16213e); border:1px solid rgba(255,255,255,.15); color:white; box-shadow:0 6px 20px rgba(0,0,0,.3); }
+.bst-a:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.4); border-color:rgba(74,181,99,.4); }
+.bst-i { background:linear-gradient(135deg,#1c1c1e,#2c2c2e); border:1px solid rgba(255,255,255,.12); color:white; box-shadow:0 6px 20px rgba(0,0,0,.3); }
+.bst-i:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.4); border-color:rgba(200,168,75,.4); }
+.stico { font-size:28px; line-height:1; }
+.stxt-s { font-size:.65rem; color:rgba(255,255,255,.55); display:block; text-transform:uppercase; letter-spacing:.06em; }
+.stxt-b { font-size:.95rem; font-weight:700; display:block; line-height:1.2; font-family:'Nunito',sans-serif; }
+
+.hstats { display:flex; gap:32px; align-items:center; flex-wrap:wrap; }
+.stn { font-size:1.7rem; font-weight:900; color:var(--gol); line-height:1; font-family:'Nunito',sans-serif; }
+.stl { font-size:.72rem; color:var(--mt); margin-top:3px; font-family:'Roboto',sans-serif; }
+.stsep { width:1px; height:36px; background:rgba(255,255,255,.12); }
+
+/* PHONE */
+.hright { position:relative; display:flex; justify-content:center; }
+.pwrap { position:relative; animation:pfl 5s ease-in-out infinite; }
+@keyframes pfl { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(1deg)} }
+.pframe { width:258px; background:linear-gradient(160deg,#1a2e1a,#0d1f0d); border:2px solid rgba(255,255,255,.15); border-radius:40px; overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05),inset 0 1px 0 rgba(255,255,255,.1); }
+.pnotch { width:90px; height:22px; background:#0d1f0d; border-radius:0 0 14px 14px; margin:0 auto; display:flex; align-items:center; justify-content:center; }
+.pcam { width:8px; height:8px; background:#1a3a1a; border-radius:50%; border:1px solid rgba(255,255,255,.1); }
+.pscreen { padding:12px 14px 18px; }
+.aphdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.apl { display:flex; align-items:center; gap:6px; }
+.apico { width:26px; height:26px; background:linear-gradient(135deg,var(--gb),var(--gl)); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; }
+.apnm { font-size:.75rem; font-weight:800; font-family:'Nunito',sans-serif; }
+.apwc { background:linear-gradient(135deg,rgba(45,138,69,.35),rgba(13,59,26,.6)); border:1px solid rgba(74,181,99,.25); border-radius:14px; padding:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
+.wct { font-size:.65rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.wctm { font-size:1.3rem; font-weight:800; font-family:'Nunito',sans-serif; line-height:1; }
+.wcc { font-size:.6rem; color:var(--gl); font-family:'Roboto',sans-serif; }
+.wcico { font-size:32px; }
+.prow { display:flex; gap:7px; margin-bottom:10px; }
+.pchip { flex:1; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:8px; text-align:center; }
+.pcc { font-size:.55rem; color:var(--mt); font-family:'Roboto',sans-serif; display:block; }
+.pcv { font-size:.75rem; font-weight:700; color:var(--gol); font-family:'Nunito',sans-serif; display:block; margin-top:2px; }
+.pct { font-size:.5rem; color:var(--gl); }
+.chatm { background:rgba(0,0,0,.2); border-radius:12px; padding:10px; margin-bottom:10px; }
+.chtag { font-size:.55rem; color:var(--go); font-family:'Roboto',sans-serif; font-weight:500; margin-bottom:6px; letter-spacing:.05em; text-transform:uppercase; }
+.cbbl { font-size:.62rem; padding:6px 9px; border-radius:9px; margin-bottom:5px; line-height:1.4; font-family:'Roboto',sans-serif; }
+.cbu { background:rgba(45,138,69,.3); border:1px solid rgba(74,181,99,.2); text-align:right; border-radius:9px 9px 3px 9px; }
+.cba { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:9px 9px 9px 3px; }
+.cban { font-size:.5rem; color:var(--gl); font-weight:600; margin-bottom:2px; }
+.tdots { display:flex; gap:3px; align-items:center; padding:4px 0; }
+.td { width:5px; height:5px; background:var(--gl); border-radius:50%; animation:tda 1.2s infinite; }
+.td:nth-child(2){animation-delay:.2s} .td:nth-child(3){animation-delay:.4s}
+@keyframes tda { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1.1)} }
+.pnav { display:flex; justify-content:space-around; padding:8px 0 0; border-top:1px solid rgba(255,255,255,.06); }
+.pni { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.pnico { font-size:14px; }
+.pnlb { font-size:.48rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.pni.act .pnlb { color:var(--gl); }
+
+.fbdg { position:absolute; background:rgba(10,35,14,.95); border:1px solid rgba(74,181,99,.3); border-radius:14px; padding:10px 14px; backdrop-filter:blur(16px); animation:bfl 4s ease-in-out infinite; min-width:160px; }
+.fbdg2 { animation-delay:-2.5s; }
+.fbt { top:-18px; right:-50px; }
+.fbb { bottom:-10px; left:-50px; }
+@keyframes bfl { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+.bfic { font-size:22px; margin-bottom:4px; }
+.bftt { font-size:.72rem; font-weight:700; color:var(--gl); font-family:'Nunito',sans-serif; }
+.bfsb { font-size:.63rem; color:var(--mt); margin-top:2px; font-family:'Roboto',sans-serif; }
+.sms-b { background:rgba(200,168,75,.12); border-color:rgba(200,168,75,.3); }
+.sms-b .bftt { color:var(--gol); }
+
+/* PROBLEM */
+#probleme { padding:100px 6%; background:linear-gradient(180deg,#061808 0%,var(--gd) 100%); }
+.prob-in { max-width:1240px; margin:0 auto; }
+.prob-cards { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; }
+.pcard { border-radius:20px; padding:32px; }
+.pc-d { background:rgba(45,138,69,.08); border:1px solid rgba(45,138,69,.22); }
+.pc-c { background:rgba(139,26,26,.08); border:1px solid rgba(139,26,26,.22); }
+.ptag { display:inline-flex; align-items:center; gap:7px; font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:22px; font-family:'Roboto',sans-serif; }
+.ptg { background:rgba(45,138,69,.2); color:var(--gl); border:1px solid rgba(74,181,99,.3); }
+.ptr { background:rgba(139,26,26,.2); color:#e07070; border:1px solid rgba(139,26,26,.35); }
+.plist { list-style:none; display:flex; flex-direction:column; gap:13px; }
+.plist li { display:flex; gap:10px; align-items:flex-start; font-size:.92rem; line-height:1.55; color:rgba(255,255,255,.84); font-family:'Roboto',sans-serif; }
+.plist li::before { content:''; width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+.pc-d .plist li::before { background:var(--gl); }
+.pc-c .plist li::before { background:#e07070; }
+.plist strong { color:white; font-weight:700; }
+.pbnr { margin-top:24px; background:linear-gradient(135deg,rgba(45,138,69,.12),rgba(200,168,75,.08)); border:1px solid rgba(200,168,75,.18); border-radius:14px; padding:20px 28px; display:flex; gap:12px; flex-wrap:wrap; justify-content:space-around; align-items:center; }
+.pbnr p { font-size:.88rem; color:rgba(255,255,255,.72); font-family:'Roboto',sans-serif; }
+.pbnr strong { color:var(--gol); }
+
+/* FEATURES */
+#fonctionnalites { padding:100px 6%; background:var(--gd); }
+.fhdr { text-align:center; max-width:600px; margin:0 auto 64px; }
+.fhdr .ssub { margin:0 auto; }
+.fgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1240px; margin:0 auto; }
+.fcard { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:28px; transition:all .35s cubic-bezier(.175,.885,.32,1.275); }
+.fcard:hover { transform:translateY(-6px); border-color:rgba(74,181,99,.3); box-shadow:0 20px 50px rgba(0,0,0,.25); background:rgba(45,138,69,.06); }
+.fico { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:20px; }
+.fig { background:linear-gradient(135deg,rgba(45,138,69,.3),rgba(74,181,99,.18)); border:1px solid rgba(74,181,99,.3); }
+.fio { background:linear-gradient(135deg,rgba(200,168,75,.28),rgba(232,201,106,.16)); border:1px solid rgba(200,168,75,.3); }
+.fir { background:linear-gradient(135deg,rgba(139,26,26,.28),rgba(180,60,60,.16)); border:1px solid rgba(139,26,26,.3); }
+.fname { font-size:1.05rem; font-weight:800; margin-bottom:10px; }
+.fdesc { font-size:.87rem; color:var(--mt); line-height:1.65; font-family:'Roboto',sans-serif; }
+.ftech { margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.06); font-size:.7rem; color:var(--gl); font-family:'Roboto',sans-serif; }
+
+/* REVENUS */
+#revenus { padding:100px 6%; background:linear-gradient(180deg,#061808 0%,var(--gd) 100%); }
+.rlayout { display:grid; grid-template-columns:1fr 1.35fr; gap:72px; align-items:start; max-width:1240px; margin:0 auto; }
+.rsticky { position:sticky; top:110px; }
+.plans { display:flex; gap:10px; margin-top:28px; }
+.plan { flex:1; border-radius:14px; padding:18px 14px; text-align:center; border:1px solid rgba(255,255,255,.1); }
+.plf { background:rgba(45,138,69,.1); border-color:rgba(45,138,69,.3); }
+.plp { background:rgba(139,26,26,.1); border-color:rgba(139,26,26,.3); }
+.plb { background:rgba(255,255,255,.04); }
+.plbdg { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; font-family:'Roboto',sans-serif; }
+.plbg { color:var(--gl); } .plbr { color:#e07070; } .plbo { color:var(--gol); }
+.plan-price { font-size:1rem; font-weight:900; margin-bottom:4px; }
+.plwho { font-size:.65rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.rgrid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.rcard { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:22px; transition:all .3s; }
+.rcard:hover { border-color:rgba(200,168,75,.28); background:rgba(200,168,75,.04); }
+.remo { font-size:26px; margin-bottom:10px; }
+.rname { font-size:.9rem; font-weight:700; margin-bottom:7px; }
+.rdesc { font-size:.8rem; color:var(--mt); line-height:1.55; font-family:'Roboto',sans-serif; }
+.rcard.sp2 { grid-column:span 2; background:linear-gradient(135deg,rgba(200,168,75,.1),rgba(45,138,69,.07)); border-color:rgba(200,168,75,.28); }
+
+/* IMPACT */
+#impact { padding:100px 6%; background:var(--gd); }
+.ihdr { text-align:center; margin-bottom:64px; }
+.igrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1240px; margin:0 auto 48px; }
+.ipil { border-radius:22px; padding:36px 30px; }
+.ips { background:linear-gradient(155deg,rgba(45,138,69,.14),rgba(13,59,26,.5)); border:1px solid rgba(45,138,69,.22); }
+.ipe { background:linear-gradient(155deg,rgba(139,26,26,.11),rgba(13,59,26,.5)); border:1px solid rgba(139,26,26,.22); }
+.ipn { background:linear-gradient(155deg,rgba(200,168,75,.09),rgba(13,59,26,.5)); border:1px solid rgba(200,168,75,.18); }
+.ipic { font-size:34px; margin-bottom:14px; }
+.iptl { font-size:1.2rem; font-weight:800; margin-bottom:20px; }
+.ipls { list-style:none; display:flex; flex-direction:column; gap:11px; }
+.ipls li { font-size:.88rem; color:rgba(255,255,255,.8); line-height:1.5; display:flex; gap:9px; font-family:'Roboto',sans-serif; }
+.ipls li::before { content:'•'; flex-shrink:0; font-size:1rem; line-height:1.3; }
+.ips .ipls li::before { color:var(--gl); } .ipe .ipls li::before { color:#e07070; } .ipn .ipls li::before { color:var(--gol); }
+.ipls strong { color:white; font-weight:700; }
+.tlstrip { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:22px 28px; max-width:1240px; margin:0 auto; }
+.tlit { display:flex; align-items:center; gap:9px; }
+.tlv { font-size:1.1rem; font-weight:900; font-family:'Nunito',sans-serif; }
+.tlvp { color:var(--gl); } .tlvn { color:#f08080; }
+.tll { font-size:.78rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.tldot { color:rgba(255,255,255,.15); }
+
+/* VIABILITÉ */
+#viabilite { padding:100px 6%; background:linear-gradient(180deg,#061808,var(--gd)); }
+.vlayout { display:grid; grid-template-columns:1.1fr 1fr; gap:72px; align-items:center; max-width:1240px; margin:0 auto; }
+.ftbl { width:100%; border-collapse:collapse; margin-top:32px; }
+.ftbl th { text-align:left; padding:11px 16px; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--go); border-bottom:1px solid rgba(255,255,255,.1); font-family:'Roboto',sans-serif; }
+.ftbl td { padding:13px 16px; font-size:.9rem; border-bottom:1px solid rgba(255,255,255,.05); color:rgba(255,255,255,.82); font-family:'Roboto',sans-serif; }
+.ftbl tr:hover td { background:rgba(255,255,255,.02); }
+.ftbl .hl td { background:rgba(45,138,69,.1); color:white; font-weight:700; }
+.rc { color:var(--gl); font-weight:700; } .hl .rc { color:var(--gol); }
+.ctitle { font-size:1.2rem; font-weight:800; margin-bottom:6px; }
+.csub { font-size:.85rem; color:var(--mt); margin-bottom:28px; font-family:'Roboto',sans-serif; }
+.bars { display:flex; align-items:flex-end; gap:10px; height:180px; }
+.bw { display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; }
+.bv { font-size:.65rem; color:white; margin-bottom:3px; font-family:'Roboto',sans-serif; }
+.b { width:100%; border-radius:6px 6px 0 0; min-height:5px; }
+.bn { background:linear-gradient(180deg,rgba(139,26,26,.7),rgba(139,26,26,.3)); }
+.bp { background:linear-gradient(180deg,var(--gb),rgba(45,138,69,.5)); }
+.bl { font-size:.68rem; color:var(--mt); margin-top:7px; font-family:'Roboto',sans-serif; }
+.rbdg { margin-top:22px; background:rgba(139,26,26,.12); border:1px solid rgba(139,26,26,.35); border-radius:13px; padding:16px 20px; display:flex; align-items:center; gap:12px; }
+.rbic { font-size:26px; }
+.rbtl { font-size:.88rem; font-weight:700; color:#f08080; margin-bottom:3px; }
+.rbds { font-size:.76rem; color:var(--mt); font-family:'Roboto',sans-serif; line-height:1.5; }
+
+/* ROADMAP */
+#roadmap { padding:100px 6%; background:var(--gd); }
+.rmhdr { text-align:center; margin-bottom:72px; }
+.phases { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; max-width:1240px; margin:0 auto; }
+.phases::before { content:''; position:absolute; top:32px; left:12.5%; right:12.5%; height:2px; background:linear-gradient(90deg,var(--gb),var(--go),var(--gl)); z-index:0; }
+.phase { text-align:center; position:relative; z-index:1; padding:0 14px; }
+.phdot { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; font-size:24px; border:2px solid; }
+.phase:nth-child(1) .phdot { background:rgba(45,138,69,.2); border-color:var(--gb); }
+.phase:nth-child(2) .phdot { background:rgba(200,168,75,.14); border-color:var(--go); }
+.phase:nth-child(3) .phdot { background:rgba(74,181,99,.14); border-color:var(--gl); }
+.phase:nth-child(4) .phdot { background:rgba(232,201,106,.14); border-color:var(--gol); }
+.phnm { font-size:1rem; font-weight:800; margin-bottom:5px; }
+.phtm { font-size:.72rem; color:var(--go); margin-bottom:12px; font-family:'Roboto',sans-serif; font-weight:500; }
+.phds { font-size:.82rem; color:var(--mt); line-height:1.6; font-family:'Roboto',sans-serif; }
+.phfd { margin-top:10px; font-size:.74rem; color:var(--gl); font-weight:700; font-family:'Roboto',sans-serif; }
+.expbar { margin-top:52px; max-width:1240px; margin-left:auto; margin-right:auto; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:22px 32px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+.explbl { font-size:.82rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.expfl { display:flex; gap:12px; align-items:center; font-size:1.5rem; }
+.expar { color:var(--go); font-size:1rem; }
+
+/* CTA */
+#contact { padding:110px 6%; position:relative; text-align:center; background:linear-gradient(180deg,#061808,var(--gd)); }
+.cglow { position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(45,138,69,.1) 0%,transparent 70%); }
+.cin { position:relative; z-index:1; max-width:760px; margin:0 auto; }
+.ctlt { font-size:clamp(2rem,4vw,3.4rem); font-weight:900; margin-bottom:18px; line-height:1.12; letter-spacing:-.02em; }
+.ctac { background:linear-gradient(90deg,var(--go),var(--gl)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.ctsu { font-size:1rem; color:var(--mt); margin-bottom:44px; line-height:1.75; font-family:'Roboto',sans-serif; }
+.dlsec { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:22px; padding:32px; margin-bottom:40px; }
+.dlt { font-size:1.1rem; font-weight:800; margin-bottom:8px; }
+.dls { font-size:.85rem; color:var(--mt); margin-bottom:24px; font-family:'Roboto',sans-serif; }
+.dlbbs { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.bdlbig { display:inline-flex; align-items:center; gap:14px; padding:15px 28px; border-radius:16px; text-decoration:none; transition:all .3s; min-width:200px; justify-content:center; font-family:'Roboto',sans-serif; }
+.bgp { background:linear-gradient(135deg,#1a1a2e,#16213e); border:1px solid rgba(74,181,99,.3); color:white; box-shadow:0 8px 24px rgba(0,0,0,.35); }
+.bgp:hover { transform:translateY(-3px); box-shadow:0 14px 36px rgba(0,0,0,.45); border-color:rgba(74,181,99,.6); }
+.bas { background:linear-gradient(135deg,#1c1c1e,#2c2c2e); border:1px solid rgba(200,168,75,.3); color:white; box-shadow:0 8px 24px rgba(0,0,0,.35); }
+.bas:hover { transform:translateY(-3px); box-shadow:0 14px 36px rgba(0,0,0,.45); border-color:rgba(200,168,75,.6); }
+.bdico { font-size:30px; }
+.bdts { font-size:.65rem; color:rgba(255,255,255,.5); display:block; text-transform:uppercase; letter-spacing:.05em; }
+.bdtl { font-size:1rem; font-weight:700; display:block; line-height:1.3; font-family:'Nunito',sans-serif; }
+.cons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.conc { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:18px 24px; text-decoration:none; color:white; transition:all .3s; min-width:180px; }
+.conc:hover { border-color:var(--gl); background:rgba(45,138,69,.08); transform:translateY(-2px); }
+.conic { font-size:22px; margin-bottom:7px; }
+.conl { font-size:.68rem; color:var(--mt); text-transform:uppercase; letter-spacing:.07em; margin-bottom:3px; font-family:'Roboto',sans-serif; }
+.conv { font-size:.85rem; font-weight:600; font-family:'Roboto',sans-serif; }
+
+/* FOOTER */
+footer { padding:28px 6%; border-top:1px solid rgba(255,255,255,.07); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+.flogo { display:flex; align-items:center; gap:9px; text-decoration:none; color:white; font-weight:800; font-size:1rem; font-family:'Nunito',sans-serif; }
+.fcopy { font-size:.76rem; color:var(--mt); font-family:'Roboto',sans-serif; }
+.ftags { display:flex; gap:7px; flex-wrap:wrap; }
+.ftag { font-size:.68rem; padding:4px 10px; border-radius:20px; background:rgba(45,138,69,.14); border:1px solid rgba(45,138,69,.25); color:var(--gl); font-family:'Roboto',sans-serif; }
+
+/* RESPONSIVE */
+@media (max-width:1024px) {
+  .hero-in { grid-template-columns:1fr; gap:48px; }
+  .hright { order:-1; }
+  .fbdg { display:none; }
+  .prob-cards { grid-template-columns:1fr; }
+  .fgrid { grid-template-columns:1fr 1fr; }
+  .rlayout { grid-template-columns:1fr; gap:40px; }
+  .rsticky { position:static; }
+  .igrid { grid-template-columns:1fr; }
+  .vlayout { grid-template-columns:1fr; }
+  .phases { grid-template-columns:1fr 1fr; gap:32px; }
+  .phases::before { display:none; }
+}
+@media (max-width:768px) {
+  .nlinks { display:none; }
+  .hbg { display:flex; }
+  .fgrid { grid-template-columns:1fr; }
+  .rgrid { grid-template-columns:1fr; }
+  .rcard.sp2 { grid-column:span 1; }
+  .plans { flex-direction:column; }
+  .phases { grid-template-columns:1fr; }
+  .hstats { gap:20px; }
+  .stsep { display:none; }
+  footer { flex-direction:column; text-align:center; align-items:center; }
+  .dlbbs { flex-direction:column; align-items:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-ico">🌿</div>
+    <span class="logo-text">AgriConnect</span>
+  </a>
+  <div class="nlinks">
+    <a href="#probleme">Problème</a>
+    <a href="#fonctionnalites">Innovation</a>
+    <a href="#revenus">Revenus</a>
+    <a href="#impact">Impact</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#contact" class="n-dl">📥 Télécharger</a>
+  </div>
+  <button class="hbg" id="mbtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mmenu" id="mmenu">
+  <button class="mcl" id="mcl">&times;</button>
+  <a href="#probleme" onclick="cn()">Problème</a>
+  <a href="#fonctionnalites" onclick="cn()">Innovation</a>
+  <a href="#revenus" onclick="cn()">Revenus</a>
+  <a href="#impact" onclick="cn()">Impact</a>
+  <a href="#roadmap" onclick="cn()">Roadmap</a>
+  <a href="#contact" onclick="cn()" class="m-dl">📥 Télécharger</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbg-c"></div>
+  <div class="hgrid"></div>
+  <div class="orb oa"></div>
+  <div class="orb ob"></div>
+
+  <div class="hero-in">
+    <div data-aos="fade-up" data-aos-duration="850">
+      <div class="hbadge">Rab'Hacks 2026 &middot; Défi 4 &middot; Agriculture Intelligente</div>
+      <h1 class="htitle">L'Application Mobile<br><span class="ac">pour Tous les</span><br>Agriculteurs</h1>
+      <p class="hdesc">AgriConnect connecte 280 millions d'agriculteurs africains à l'intelligence artificielle. Alertes météo, prix des marchés, diagnostic IA, chatbot multilingue — tout dans une seule app, même sur téléphone 2G.</p>
+
+      <div class="dl-btns">
+        <a href="https://play.google.com/store" target="_blank" class="btn-st bst-a">
+          <span class="stico">▶</span>
+          <div><span class="stxt-s">Disponible sur</span><span class="stxt-b">Google Play</span></div>
+        </a>
+        <a href="https://apps.apple.com" target="_blank" class="btn-st bst-i">
+          <span class="stico">🍎</span>
+          <div><span class="stxt-s">Télécharger sur</span><span class="stxt-b">App Store</span></div>
+        </a>
+      </div>
+
+      <div class="hstats">
+        <div class="stat"><div class="stn">280M</div><div class="stl">Agriculteurs cibles</div></div>
+        <div class="stsep"></div>
+        <div class="stat"><div class="stn">8</div><div class="stl">Langues locales</div></div>
+        <div class="stsep"></div>
+        <div class="stat"><div class="stn">+30%</div><div class="stl">Revenus agricoles</div></div>
+        <div class="stsep"></div>
+        <div class="stat"><div class="stn">7</div><div class="stl">Sources de revenus</div></div>
+      </div>
+    </div>
+
+    <!-- PHONE MOCKUP -->
+    <div class="hright" data-aos="fade-up" data-aos-duration="850" data-aos-delay="180">
+      <div class="pwrap">
+        <div class="pframe">
+          <div class="pnotch"><div class="pcam"></div></div>
+          <div class="pscreen">
+            <div class="aphdr">
+              <div class="apl"><div class="apico">🌿</div><span class="apnm">AgriConnect</span></div>
+              <span>🔔</span>
+            </div>
+            <div class="apwc">
+              <div><div class="wct">Fès-Meknès, Maroc</div><div class="wctm">34°C</div><div class="wcc">⚠️ Irriguer ce soir</div></div>
+              <div class="wcico">☀️</div>
+            </div>
+            <div class="prow">
+              <div class="pchip"><span class="pcc">🍅 Tomate</span><span class="pcv">3.20 MAD</span><span class="pct">↑ +0.40</span></div>
+              <div class="pchip"><span class="pcc">🌾 Blé</span><span class="pcv">2.80 MAD</span><span class="pct">→ stable</span></div>
+              <div class="pchip"><span class="pcc">🫒 Olive</span><span class="pcv">8.50 MAD</span><span class="pct">↑ +1.20</span></div>
+            </div>
+            <div class="chatm">
+              <div class="chtag">🤖 Assistant IA</div>
+              <div class="cbbl cbu">Mes tomates jaunissent...</div>
+              <div class="cbbl cba"><div class="cban">AgriConnect IA</div>Carence azote. Appliquez 20g/m² de sulfate d'ammonium.</div>
+              <div class="cbbl cba"><div class="tdots"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>
+            </div>
+            <div class="pnav">
+              <div class="pni act"><span class="pnico">🏠</span><span class="pnlb">Accueil</span></div>
+              <div class="pni"><span class="pnico">📊</span><span class="pnlb">Marchés</span></div>
+              <div class="pni"><span class="pnico">🤖</span><span class="pnlb">IA Chat</span></div>
+              <div class="pni"><span class="pnico">🛒</span><span class="pnlb">Store</span></div>
+              <div class="pni"><span class="pnico">👤</span><span class="pnlb">Profil</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="fbdg fbt"><div class="bfic">🌩️</div><div class="bftt">Alerte Météo</div><div class="bfsb">Pluies fortes dans 48h</div></div>
+        <div class="fbdg fbdg2 fbb sms-b"><div class="bfic">📱</div><div class="bftt">SMS 2G disponible</div><div class="bfsb">Fonctionne sans internet</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLÈME -->
+<section id="probleme">
+  <div class="prob-in">
+    <div data-aos="fade-up">
+      <span class="eyebrow">// Le Problème</span>
+      <h2 class="stitle">Une Fracture Digitale Massive</h2>
+      <p class="ssub">L'agriculture africaine souffre d'un accès inégal à l'information. Les agriculteurs perdent chaque année des milliards en prenant des décisions sans données.</p>
+    </div>
+    <div class="prob-cards">
+      <div class="pcard pc-d" data-aos="fade-up" data-aos-delay="100">
+        <div class="ptag ptg">📊 Chiffres Clés</div>
+        <ul class="plist">
+          <li><strong>280 millions</strong> d'agriculteurs en Afrique</li>
+          <li><strong>80%</strong> sans accès internet stable</li>
+          <li><strong>40%</strong> de pertes post-récolte évitables</li>
+          <li>Revenus <strong>3× inférieurs</strong> au potentiel</li>
+          <li><strong>50–70%</strong> de la valeur captée par les intermédiaires</li>
+        </ul>
+      </div>
+      <div class="pcard pc-c" data-aos="fade-up" data-aos-delay="200">
+        <div class="ptag ptr">⚠️ Conséquences</div>
+        <ul class="plist">
+          <li>Insécurité alimentaire pour <strong>735M de personnes</strong></li>
+          <li>Rendements <strong>20–30% sous le potentiel</strong></li>
+          <li>Exode rural massif des jeunes</li>
+          <li>Dépendance chronique aux intermédiaires</li>
+          <li>Décisions de vente non informées</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pbnr" data-aos="fade-up" data-aos-delay="300">
+      <p>🌍 Marché AgriTech Afrique 2030 : <strong>$2.3 milliards</strong></p>
+      <p>📈 Potentiel gain rendement : <strong>+15 à +30%</strong></p>
+      <p>💡 Notre app adresse directement ces lacunes</p>
+    </div>
+  </div>
+</section>
+
+<!-- FONCTIONNALITÉS -->
+<section id="fonctionnalites">
+  <div class="fhdr" data-aos="fade-up">
+    <span class="eyebrow">// Innovation</span>
+    <h2 class="stitle">Technologies de Pointe<br>dans votre poche</h2>
+    <p class="ssub">Six modules puissants réunis dans une seule application mobile, accessibles même hors-ligne.</p>
+  </div>
+  <div class="fgrid">
+    <div class="fcard" data-aos="fade-up" data-aos-delay="80">
+      <div class="fico fir">🤖</div>
+      <h3 class="fname">Chatbot IA Multilingue</h3>
+      <p class="fdesc">LLM fine-tuné (Mistral 7B) + RAG sur 50 000+ documents agricoles. Conseils personnalisés en Darija, Wolof, Hausa, Bambara, Swahili et plus.</p>
+      <div class="ftech">Mistral 7B · RAG · 8 langues locales</div>
+    </div>
+    <div class="fcard" data-aos="fade-up" data-aos-delay="130">
+      <div class="fico fig">🔬</div>
+      <h3 class="fname">Diagnostic Computer Vision</h3>
+      <p class="fdesc">Photographiez vos cultures et obtenez un diagnostic instantané. 85–90% de précision, 38 maladies détectées. Fonctionne 100% hors-ligne via TensorFlow Lite.</p>
+      <div class="ftech">TensorFlow Lite · Offline · 38 maladies</div>
+    </div>
+    <div class="fcard" data-aos="fade-up" data-aos-delay="180">
+      <div class="fico fio">🌩️</div>
+      <h3 class="fname">Alertes ML Météo & Ravageurs</h3>
+      <p class="fdesc">LSTM + Random Forest sur données Sentinel-2 et NASA POWER. Prévisions hyper-localisées à 10 km, 7 jours à l'avance. Alertes reçues par SMS même sans smartphone.</p>
+      <div class="ftech">LSTM · Sentinel-2 · NASA POWER · 10km</div>
+    </div>
+    <div class="fcard" data-aos="fade-up" data-aos-delay="230">
+      <div class="fico fig">📱</div>
+      <h3 class="fname">Accessibilité Universelle</h3>
+      <p class="fdesc">Clé différenciante absolue : fonctionne sur téléphone 2G par SMS. PWA offline-first, WhatsApp, Vocal. Aucune solution concurrente n'offre cette accessibilité.</p>
+      <div class="ftech">SMS · WhatsApp · Vocal · PWA offline-first</div>
+    </div>
+    <div class="fcard" data-aos="fade-up" data-aos-delay="280">
+      <div class="fico fio">📊</div>
+      <h3 class="fname">Prix du Marché en Temps Réel</h3>
+      <p class="fdesc">Données actualisées sur tous les marchés locaux. Permet de négocier directement, d'identifier les meilleurs moments de vente et d'éliminer les intermédiaires abusifs.</p>
+      <div class="ftech">Marchés locaux · Temps réel · Négociation</div>
+    </div>
+    <div class="fcard" data-aos="fade-up" data-aos-delay="330">
+      <div class="fico fig">🤝</div>
+      <h3 class="fname">Marketplace Agricole</h3>
+      <p class="fdesc">Connexion directe agriculteurs–acheteurs intégrée à l'app. Intrants référencés (semences, engrais, équipements). Suppression des intermédiaires, maximisation des revenus.</p>
+      <div class="ftech">B2B · Intrants · Commission 3–5%</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUS -->
+<section id="revenus">
+  <div class="rlayout">
+    <div class="rsticky" data-aos="fade-right">
+      <span class="eyebrow">// Rémunération</span>
+      <h2 class="stitle">7 Sources<br>de Revenus</h2>
+      <p class="ssub">Un modèle économique diversifié et résilient, de la monétisation directe aux revenus institutionnels.</p>
+      <div class="plans">
+        <div class="plan plf"><div class="plbdg plbg">GRATUIT</div><div class="plan-price">0 EUR</div><div class="plwho">Point d'entrée masse</div></div>
+        <div class="plan plp"><div class="plbdg plbr">PREMIUM</div><div class="plan-price">5–10 EUR</div><div class="plwho">par mois</div></div>
+        <div class="plan plb"><div class="plbdg plbo">BUSINESS</div><div class="plan-price">500–2K EUR</div><div class="plwho">Coopératives · ONG</div></div>
+      </div>
+    </div>
+    <div data-aos="fade-left">
+      <div class="rgrid">
+        <div class="rcard"><div class="remo">🏪</div><h3 class="rname">Marketplace</h3><p class="rdesc">Commission 3–5% sur chaque transaction agriculteur–acheteur réalisée via l'app.</p></div>
+        <div class="rcard"><div class="remo">🌱</div><h3 class="rname">Partenariats Intrants</h3><p class="rdesc">Commissions sur ventes de semences, engrais et équipements agricoles référencés.</p></div>
+        <div class="rcard"><div class="remo">🛡️</div><h3 class="rname">Assurances Agricoles</h3><p class="rdesc">Data prédictive pour des tarifs précis — rémunération par apport ou commission.</p></div>
+        <div class="rcard"><div class="remo">💳</div><h3 class="rname">Micro-financement</h3><p class="rdesc">Commission sur prêts agricoles facilités via le scoring de données utilisateurs.</p></div>
+        <div class="rcard"><div class="remo">🏛️</div><h3 class="rname">Subventions & Grants</h3><p class="rdesc">FAO, Banque Mondiale, fondations, gouvernements — sources non dilutives.</p></div>
+        <div class="rcard"><div class="remo">📈</div><h3 class="rname">Data Insights</h3><p class="rdesc">Rapports de tendances anonymisés vendus à instituts de recherche et ministères.</p></div>
+        <div class="rcard sp2"><div class="remo">⭐</div><h3 class="rname">Abonnements Freemium — Source Principale</h3><p class="rdesc">Gratuit (10 SMS/jour, météo, prix) → Premium (SMS illimités, IA avancée, 5–10 EUR/mois) → Business pour coopératives, ONG, ministères (500–2 000 EUR/mois).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="ihdr" data-aos="fade-up">
+    <span class="eyebrow">// Impact Positif</span>
+    <h2 class="stitle">Social, Économique, Environnemental</h2>
+  </div>
+  <div class="igrid">
+    <div class="ipil ips" data-aos="fade-up" data-aos-delay="100">
+      <div class="ipic">👥</div>
+      <h3 class="iptl">Impact Social</h3>
+      <ul class="ipls">
+        <li>Autonomisation des agriculteurs</li>
+        <li>Égalité de genre dans l'accès à l'information</li>
+        <li>Agriculture attractive pour les jeunes</li>
+        <li>Réduction de l'exode rural</li>
+      </ul>
+    </div>
+    <div class="ipil ipe" data-aos="fade-up" data-aos-delay="200">
+      <div class="ipic">💰</div>
+      <h3 class="iptl">Impact Économique</h3>
+      <ul class="ipls">
+        <li><strong>+30–40%</strong> revenus agricoles</li>
+        <li><strong>-35%</strong> pertes post-récolte</li>
+        <li><strong>+25%</strong> rendements des cultures</li>
+        <li><strong>50+</strong> emplois directs créés</li>
+        <li><strong>500</strong> emplois indirects générés</li>
+      </ul>
+    </div>
+    <div class="ipil ipn" data-aos="fade-up" data-aos-delay="300">
+      <div class="ipic">🌍</div>
+      <h3 class="iptl">Impact Environnemental</h3>
+      <ul class="ipls">
+        <li><strong>-20–30%</strong> usage de l'eau</li>
+        <li><strong>-25%</strong> utilisation de pesticides</li>
+        <li>Réduction des émissions de GES</li>
+        <li>Promotion de l'agroécologie durable</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tlstrip" data-aos="fade-up" data-aos-delay="350">
+    <div class="tlit"><span class="tlv tlvp">+15%</span><span class="tll">rendements à 6 mois</span></div>
+    <span class="tldot">·</span>
+    <div class="tlit"><span class="tlv tlvp">+25%</span><span class="tll">rendements à 12 mois</span></div>
+    <span class="tldot">·</span>
+    <div class="tlit"><span class="tlv tlvn">-20%</span><span class="tll">pertes à 6 mois</span></div>
+    <span class="tldot">·</span>
+    <div class="tlit"><span class="tlv tlvn">-35%</span><span class="tll">pertes à 12 mois</span></div>
+  </div>
+</section>
+
+<!-- VIABILITÉ -->
+<section id="viabilite">
+  <div class="vlayout">
+    <div data-aos="fade-right">
+      <span class="eyebrow">// Viabilité Économique</span>
+      <h2 class="stitle">Projections Financières 5 ans</h2>
+      <p class="ssub">Rentabilité atteinte dès l'An 3 grâce à une architecture cloud à coûts marginaux faibles et des grants institutionnels.</p>
+      <table class="ftbl">
+        <thead><tr><th>Année</th><th>Utilisateurs</th><th>Revenus</th></tr></thead>
+        <tbody>
+          <tr><td>An 1</td><td>10 000</td><td class="rc">50K EUR</td></tr>
+          <tr><td>An 2</td><td>50 000</td><td class="rc">300K EUR</td></tr>
+          <tr class="hl"><td>An 3 ★</td><td>200 000</td><td class="rc">1.5M EUR</td></tr>
+          <tr><td>An 4</td><td>500 000</td><td class="rc">4M EUR</td></tr>
+          <tr class="hl"><td>An 5</td><td>1 000 000</td><td class="rc">10M EUR</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div data-aos="fade-left">
+      <h3 class="ctitle">Résultats Financiers</h3>
+      <p class="csub">Déficit initial → Bénéfice croissant</p>
+      <div class="bars">
+        <div class="bw"><div class="bv" style="color:#e07070">-200K</div><div class="b bn" style="height:26%"></div><div class="bl">An 1</div></div>
+        <div class="bw"><div class="bv" style="color:#e07070">-100K</div><div class="b bn" style="height:13%"></div><div class="bl">An 2</div></div>
+        <div class="bw"><div class="bv" style="color:#4ab563">700K</div><div class="b bp" style="height:38%"></div><div class="bl">An 3</div></div>
+        <div class="bw"><div class="bv" style="color:#4ab563">2.5M</div><div class="b bp" style="height:62%"></div><div class="bl">An 4</div></div>
+        <div class="bw"><div class="bv" style="color:#e8c96a">7M</div><div class="b bp" style="height:100%"></div><div class="bl">An 5</div></div>
+      </div>
+      <div class="rbdg"><div class="rbic">⭐</div><div><div class="rbtl">Rentabilité An 3</div><div class="rbds">Architecture cloud à coûts marginaux faibles + grants institutionnels sécurisent la phase initiale.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="rmhdr" data-aos="fade-up">
+    <span class="eyebrow">// Feuille de Route</span>
+    <h2 class="stitle">4 Phases de Croissance</h2>
+  </div>
+  <div class="phases">
+    <div class="phase" data-aos="fade-up" data-aos-delay="80">
+      <div class="phdot">🚀</div>
+      <h3 class="phnm">Hackathon</h3>
+      <div class="phtm">8 jours</div>
+      <p class="phds">MVP : SMS + Météo + Prix. Tests avec des agriculteurs. Pitch Rab'Hacks 2026.</p>
+      <div class="phfd">Phase actuelle</div>
+    </div>
+    <div class="phase" data-aos="fade-up" data-aos-delay="160">
+      <div class="phdot">🌱</div>
+      <h3 class="phnm">Post-Hackathon</h3>
+      <div class="phtm">3 mois</div>
+      <p class="phds">Pilote 500 agriculteurs à Fès-Meknès. Pré-seed et premières données terrain.</p>
+      <div class="phfd">50–100K EUR</div>
+    </div>
+    <div class="phase" data-aos="fade-up" data-aos-delay="240">
+      <div class="phdot">📈</div>
+      <h3 class="phnm">Scale</h3>
+      <div class="phtm">6–12 mois</div>
+      <p class="phds">5 000 utilisateurs actifs. Marketplace en ligne. Seed round finalisé.</p>
+      <div class="phfd">500K–1M EUR</div>
+    </div>
+    <div class="phase" data-aos="fade-up" data-aos-delay="320">
+      <div class="phdot">👑</div>
+      <h3 class="phnm">Leader</h3>
+      <div class="phtm">12–24 mois</div>
+      <p class="phds">50 000+ utilisateurs. Profitabilité atteinte. Leader AgriTech Afrique du Nord.</p>
+      <div class="phfd">Série A · 3–5M EUR</div>
+    </div>
+  </div>
+  <div class="expbar" data-aos="fade-up" data-aos-delay="400">
+    <span class="explbl">Expansion prévue :</span>
+    <div class="expfl">
+      <span>🇲🇦</span><span class="expar">→</span>
+      <span>🇩🇿</span><span class="expar">→</span>
+      <span>🇸🇳</span><span class="expar">→</span>
+      <span>🌍</span>
+    </div>
+    <span class="explbl">Maroc · Algérie · Sénégal · Continent africain</span>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cglow"></div>
+  <div class="cin" data-aos="fade-up">
+    <span class="eyebrow">// Téléchargez l'App</span>
+    <h2 class="ctlt">Révolutionnons<br><span class="ctac">l'Agriculture Africaine</span></h2>
+    <p class="ctsu">Parce que chaque agriculteur mérite un accès égal à l'information.<br>Téléchargez l'application et rejoignez le mouvement.</p>
+    <div class="dlsec">
+      <h3 class="dlt">📥 Télécharger AgriConnect</h3>
+      <p class="dls">Disponible sur Android et iOS. Fonctionne aussi par SMS sur téléphone 2G sans internet.</p>
+      <div class="dlbbs">
+        <a href="https://play.google.com/store" target="_blank" class="bdlbig bgp">
+          <span class="bdico">▶</span>
+          <div><span class="bdts">Télécharger sur</span><span class="bdtl">Google Play</span></div>
+        </a>
+        <a href="https://apps.apple.com" target="_blank" class="bdlbig bas">
+          <span class="bdico">🍎</span>
+          <div><span class="bdts">Télécharger sur</span><span class="bdtl">App Store</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="cons">
+      <a href="mailto:team@agriconnect.africa" class="conc"><div class="conic">✉️</div><div class="conl">Email</div><div class="conv">team@agriconnect.africa</div></a>
+      <a href="#" class="conc"><div class="conic">🏆</div><div class="conl">Événement</div><div class="conv">Rab'Hacks 2026</div></a>
+      <a href="#" class="conc"><div class="conic">📍</div><div class="conl">Basé à</div><div class="conv">Fès-Meknès, Maroc</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="flogo"><div class="logo-ico">🌿</div>AgriConnect</a>
+  <p class="fcopy">© 2026 AgriConnect · Rab'Hacks — Défi 4 : Agriculture Intelligente & Connectée</p>
+  <div class="ftags">
+    <span class="ftag">7 revenus</span>
+    <span class="ftag">IA + SMS 2G</span>
+    <span class="ftag">Rentable An 3</span>
+    <span class="ftag">+30% revenus</span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration:750, once:true, offset:55, easing:'ease-out-cubic' });
+  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scr', window.scrollY > 70); });
+  document.getElementById('mbtn').addEventListener('click', () => document.getElementById('mmenu').classList.add('open'));
+  document.getElementById('mcl').addEventListener('click', cn);
+  function cn() { document.getElementById('mmenu').classList.remove('open'); }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+</script>
+</body>
+</html>

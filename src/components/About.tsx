@@ -105,9 +105,8 @@ const About = () => {
             </div>
             <h3 className="font-display text-2xl font-bold mb-4">Notre Mission</h3>
             <p className="font-body text-muted-foreground leading-relaxed text-lg">
-              Concevoir des solutions web sur mesure afin d'améliorer la performance des entreprises 
-              et d'offrir aux particuliers des outils digitaux pratiques, rapides et efficaces.
-            </p>
+                Fournir des solutions digitales sur-mesure qui maximisent l'efficacité opérationnelle de nos partenaires
+              </p>
           </div>
 
           {/* Vision */}
@@ -117,9 +116,8 @@ const About = () => {
             </div>
             <h3 className="font-display text-2xl font-bold mb-4">Notre Vision</h3>
             <p className="font-body text-muted-foreground leading-relaxed text-lg">
-              Révolutionner la manière dont les entreprises et les particuliers utilisent le web, 
-              en proposant des solutions digitales intelligentes, accessibles et innovantes.
-            </p>
+                Être le moteur de la réussite digitale de nos clients à travers une technologie durable
+              </p>
           </div>
         </div>
 
