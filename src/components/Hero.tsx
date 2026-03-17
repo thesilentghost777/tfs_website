@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import heroBg from '@/assets/hero-bg.jpg';
 
@@ -7,7 +7,53 @@ const Hero = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  
+  const [currentOption, setCurrentOption] = useState(0);
 
+  // Options de texte optimisées pour le marketing
+  const options = [
+    {
+      title: 'Sites web & applications',
+      fullTitle: 'Nous concevons des ',
+      highlight: 'Solutions sur mesure',
+      description: "Nous créons des sites web et des applications web & mobiles sur mesure. Nous sommes spécialisés dans les logiciels de gestion pour booster votre activité."
+    },
+    {
+      title: 'Libérez votre',
+      fullTitle: 'Libérez votre temps précieux',
+      highlight: 'temps précieux',
+      description: "Nous concevons des solutions digitales sur mesure pour accélérer votre gestion (inventaire, comptabilité, statistiques) et vous redonner le contrôle de votre temps."
+    },
+    {
+      title: 'Contrôlez totalement',
+      fullTitle: 'Contrôlez totalement votre business',
+      highlight: 'votre business',
+      description: "Nous proposons des outils de supervision en temps réel pour piloter vos entreprises et prendre les bonnes décisions stratégiques, où que vous soyez."
+    },
+    {
+      title: 'Automatisez vos',
+      fullTitle: 'Automatisez vos tâches répétitives',
+      highlight: 'tâches répétitives',
+      description: "Nous créons des logiciels qui automatisent intelligemment les tâches chronophages, libérant vos équipes pour des missions à plus forte valeur ajoutée."
+    },
+    {
+      title: 'Sécurisez vos',
+      fullTitle: 'Réduisez les possibilités ',
+      highlight: 'de vol',
+      description: "Nous proposons des solutions logicielles qui tracent et sécurisent chaque action, réduisant considérablement les risques de détournement interne."
+    }
+  ];
+
+  // Rotation automatique des options - 7 secondes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentOption((prev) => (prev + 1) % options.length);
+    }, 7000); // Changé à 7000ms
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Animation GSAP
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.8 });
@@ -34,6 +80,47 @@ const Hero = () => {
     return () => ctx.revert();
   }, []);
 
+  // Animation de transition pour le texte
+  useEffect(() => {
+    if (titleRef.current && subtitleRef.current) {
+      gsap.to([titleRef.current, subtitleRef.current], {
+        opacity: 0,
+        y: -20,
+        duration: 0.3,
+        onComplete: () => {
+          // Mise à jour du texte
+          if (titleRef.current && subtitleRef.current) {
+            gsap.set([titleRef.current, subtitleRef.current], {
+              opacity: 0,
+              y: 20
+            });
+            
+            gsap.to([titleRef.current, subtitleRef.current], {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'power3.out'
+            });
+          }
+        }
+      });
+    }
+  }, [currentOption]);
+
+  // Fonction pour afficher le titre avec le mot en bleu
+  const renderTitle = () => {
+    const current = options[currentOption];
+    const parts = current.fullTitle.split(current.highlight);
+    
+    return (
+      <>
+        {parts[0]}
+        <span className="text-gradient">{current.highlight}</span>
+        {parts[1]}
+      </>
+    );
+  };
+
   return (
     <section
       id="hero"
@@ -52,7 +139,7 @@ const Hero = () => {
       {/* Content */}
 
       {/* Logo - Centré sur mobile, à gauche sur desktop */}
-      <div className="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 md:left-32 md:translate-x-0">
+      <div className="absolute top-6 md:top-8 left-1/2 -translate-x-1/2 md:left-32 md:translate-x-0 z-20">
         <img 
           src="/logos/logo_final.png" 
           alt="TechForge Solution 237" 
@@ -60,38 +147,36 @@ const Hero = () => {
         />
       </div>
 
-      <div className="relative z-10 container-custom px-4 pt-24 md:pt-0">
+      <div className="relative z-10 container-custom px-4 pt-32 md:pt-24">
         <div className="max-w-5xl mx-auto text-center">
 
           {/* Badge - Optimisé pour mobile */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2 rounded-full border border-border bg-muted/30 backdrop-blur-sm mb-10 md:mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2 rounded-full border border-border bg-muted/30 backdrop-blur-sm mb-8 md:mb-10">
             <span className="text-xs md:text-sm font-medium tracking-wide uppercase text-muted-foreground">
               Forge à solution sur mesure
             </span>
           </div>
 
-          {/* Title */}
+          {/* Title avec animation */}
           <h1
             ref={titleRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1] mb-10 md:mb-8 tracking-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1] mb-6 md:mb-8 tracking-tight min-h-[120px] md:min-h-[160px] flex items-center justify-center"
           >
-            <span className="block">Libérez votre</span>
-            <span className="block text-gradient">temps précieux</span>
+            <span className="block">{renderTitle()}</span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle avec animation */}
           <p
             ref={subtitleRef}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-14 md:mb-12 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed min-h-[80px] md:min-h-[60px] flex items-center justify-center"
           >
-            Nous concevons des solutions digitales sur mesure pour automatiser votre business 
-            et vous redonner le contrôle de votre temps.
+            {options[currentOption].description}
           </p>
 
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-5 md:gap-4">
             <a href="#contact" className="btn-primary w-full sm:w-auto">
-              Démarrer maintenant
+              Travaillons ensemble
             </a>
             <a href="#realisations" className="btn-outline w-full sm:w-auto">
               Voir nos réalisations
@@ -99,7 +184,7 @@ const Hero = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 md:gap-8 mt-20 md:mt-24 pt-10 md:pt-12 border-t border-border/30">
+          <div className="grid grid-cols-3 gap-6 md:gap-8 mt-16 md:mt-24 pt-10 md:pt-12 border-t border-border/30">
             {[
               { value: '50+', label: 'Projets livrés' },
               { value: '15+', label: 'Clients satisfaits' },

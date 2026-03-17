@@ -254,24 +254,31 @@ const PriceEstimator = () => {
   // Open/close animation
   useEffect(() => {
     if (!modalRef.current || !overlayRef.current) return;
+    
     if (open) {
       document.body.style.overflow = 'hidden';
       gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 });
       gsap.fromTo(modalRef.current,   { opacity: 0, y: 40, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'power3.out' });
     } else {
+      // Important: restaurer le scroll quand le modal est fermé
       document.body.style.overflow = '';
     }
   }, [open]);
 
   const closeModal = () => {
     if (!modalRef.current || !overlayRef.current) return;
+    
     gsap.to(modalRef.current,   { opacity: 0, y: 20, scale: 0.97, duration: 0.25, ease: 'power2.in' });
     gsap.to(overlayRef.current, {
-      opacity: 0, duration: 0.25, onComplete: () => {
+      opacity: 0, 
+      duration: 0.25, 
+      onComplete: () => {
         setOpen(false);
         setStep(1);
         setSubmitted(false);
         setDeliveryMode(null);
+        // Réactiver le scroll après l'animation de fermeture
+        document.body.style.overflow = '';
       }
     });
   };
@@ -406,10 +413,10 @@ const PriceEstimator = () => {
               <div>
                 <StepHeader
                   step={2} total={TOTAL_STEPS}
-                  title="Distribution & Fonctionnalités"
+                  title="Fonctionnalités principales"
                   desc={isAutomat
                     ? "Précisez les intégrations et modules nécessaires à votre automatisation."
-                    : "Où sera déployée votre solution et quelles fonctionnalités clés faut-il ?"}
+                    : "Quelles fonctionnalités clés doit intégrer votre solution ?"}
                 />
                 <div className="space-y-6">
 

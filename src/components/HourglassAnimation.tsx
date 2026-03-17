@@ -96,21 +96,22 @@ const HourglassAnimation = () => {
       <div className="relative flex items-center justify-center gap-8 md:gap-16 lg:gap-24 w-full max-w-7xl px-4">
         
         {/* Left Text */}
-        <div 
-          ref={textLeftRef}
-          className="hidden md:block text-right max-w-xs lg:max-w-sm opacity-0"
-          style={{ willChange: 'opacity, transform' }}
-        >
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            <span className="text-gradient">Sur quel projet</span>
-          </p>
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
-            allez-vous vous
-          </p>
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
-            consacrer
-          </p>
-        </div>
+       <div 
+  ref={textLeftRef}
+  className="hidden md:block text-right max-w-xs lg:max-w-sm opacity-0"
+  style={{ willChange: 'opacity, transform' }}
+>
+  <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
+    <span className="text-gradient">Nous livrons</span>
+  </p>
+  <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
+    rapidement
+  </p>
+  <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
+    et efficacement
+  </p>
+</div>
+
 
         {/* Hourglass SVG */}
         <div 
@@ -242,20 +243,15 @@ const HourglassAnimation = () => {
 
         {/* Right Text */}
         <div 
-          ref={textRightRef}
-          className="hidden md:block text-left max-w-xs lg:max-w-sm opacity-0"
-          style={{ willChange: 'opacity, transform' }}
-        >
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
-            avec le temps
-          </p>
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight text-foreground">
-            que vous allez
-          </p>
-          <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
-            <span className="text-gradient">liberer ?</span>
-          </p>
-        </div>
+  ref={textRightRef}
+  className="hidden md:block text-left max-w-xs lg:max-w-sm opacity-0"
+  style={{ willChange: 'opacity, transform' }}
+>
+  <p className="text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight">
+    C’est notre <span className="text-gradient">particularité</span>
+  </p>
+</div>
+
       </div>
 
       {/* Mobile Text - Below hourglass */}
@@ -265,10 +261,10 @@ const HourglassAnimation = () => {
         style={{ willChange: 'opacity' }}
       >
         <p className="text-xl font-bold leading-relaxed">
-          <span className="text-gradient">Sur quel projet</span>
-          <span className="text-foreground"> allez-vous vous consacrer </span>
-          <span className="text-foreground">avec le temps que vous allez </span>
-          <span className="text-gradient">liberer ?</span>
+          <span className="text-gradient">Nous Livrons</span>
+          <span className="text-foreground"> rapidement et efficacement. </span>
+          <span className="text-foreground">Ceci est notre </span>
+          <span className="text-gradient">particularité.</span>
         </p>
       </div>
 
