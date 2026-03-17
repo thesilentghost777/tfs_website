@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Phone, Github, Linkedin, Facebook, Youtube, Instagram } from 'lucide-react';
+import { Phone, Mail, Linkedin, Facebook, Youtube, Instagram } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,7 +41,7 @@ const Contact = () => {
   }, []);
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/thesilentghost777', label: 'GitHub' },
+    { icon: Mail, href: 'mailto:contact@tfs237.com', label: 'Email' },
     { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
     { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
     { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
