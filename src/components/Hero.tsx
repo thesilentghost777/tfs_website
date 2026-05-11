@@ -44,11 +44,11 @@ const Hero = () => {
     }
   ];
 
-  // Rotation automatique des options - 7 secondes
+  // Rotation automatique des options - 10 secondes
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentOption((prev) => (prev + 1) % options.length);
-    }, 7000); // Changé à 7000ms
+    }, 10000); // Changé à 10000ms
 
     return () => clearInterval(interval);
   }, []);

@@ -11,7 +11,6 @@ import Partners from '@/components/Partners';
 import Technologies from '@/components/Technologies';
 import About from '@/components/About';
 import Locaux from '@/components/Locaux';
-import Equipe from '@/components/Equipe';
 import Contact from '@/components/Contact';
 import Map from '@/components/Map';
 import Footer from '@/components/Footer';
@@ -68,7 +67,6 @@ const Index = () => {
         <Realisations />
         <Partners />
         <Technologies />
-        <Equipe />
         <About />
         <Contact />
         <Map />
